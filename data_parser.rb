@@ -27,14 +27,13 @@ class Delivery
   end
 end
 
+
 deliveries = CSV.foreach('planet_express_logs.csv', headers: true, header_converters: :symbol).collect { |row| Delivery.new(row) }
 
 puts "We made #{deliveries.inject(0) { |sum, data| sum + data.revenue }} this week"
 
 
-puts deliveries.select { |deliveries| deliveries.find_pilot == pilot }.inject(0) { |sum, data| sum + data.bonus }
-
-puts "#{pilot} made #{deliveries.count} deliveries"
-
-deliveries.group_by(&:pilot).each do |pilot, deliveries|
-end
+puts "Fry made #{deliveries.count {|trip| trip.pilot.include? "Fry"}} trips, and made #{deliveries.select { |deliveries| deliveries.find_pilot == "Fry" }.inject(0) { |sum, data| sum + data.bonus }} bonus"
+puts "Amy made #{deliveries.count {|trip| trip.pilot.include? "Amy"}} trips, and made #{deliveries.select { |deliveries| deliveries.find_pilot == "Amy" }.inject(0) { |sum, data| sum + data.bonus }} bonus"
+puts "Bender made #{deliveries.count {|trip| trip.pilot.include? "Bender"}} trips, and made #{deliveries.select { |deliveries| deliveries.find_pilot == "Bender" }.inject(0) { |sum, data| sum + data.bonus }} bonus"
+puts "Leela made #{deliveries.count {|trip| trip.pilot.include? "Leela"}} trips, and made #{deliveries.select { |deliveries| deliveries.find_pilot == "Leela" }.inject(0) { |sum, data| sum + data.bonus }} bonus"
